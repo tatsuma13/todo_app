@@ -18,13 +18,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="addNewGoal">Add</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
 
-
-<div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -68,8 +68,6 @@
             </div>
         </div>
 
-
-
         <div class="modal fade" id="editGoalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -84,6 +82,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="editGoalTitle">Edit</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -100,6 +99,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal" v-on:click="deleteGoal">Delete</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,6 @@
 import axios from "axios"
 import $ from "jquery"
 import Todos from "./Todos.vue";
-
 export default {
     data: function() {
         return {
@@ -142,18 +141,17 @@ export default {
             tagTitle: "",
             goals: [],
             tags: []
-        
         }
     },
     components: {
         'goals-todos': Todos
     },
     mounted: function () {
-        this.getAllGaols();
+        this.getAllGoals();
         this.getAllTags();
     },
     methods: {
-        getAllGaols: function () {
+        getAllGoals: function () {
             axios.get("/goals").then((response) => {
                 for(let i = 0; i < response.data.length; i++) {
                     this.goals.push(response.data[i])
@@ -247,7 +245,6 @@ export default {
                 console.log(error)
             })
         },
-
     }
 }
 </script>

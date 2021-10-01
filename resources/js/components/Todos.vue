@@ -12,18 +12,6 @@
                     </div>
                     <div class="modal-body">
                         <input v-model="content" class="form-control">
-                         <div v-for="(key, index) in tags" :key="index">
-                                <div class="form-check">
-                                    <span v-if="checkTag(todo.tags, tags[index].title)">
-                                        <span >✔</span>
-                                        <button class="btn btn-secondary m-1" v-on:click="removeTodoTag(todo.id, tags[index].id)">{{ tags[index].title }}</button>
-                                    </span>
-                                    <span v-else>
-                                        <span>▢</span>
-                                        <button class="btn btn-secondary m-1" v-on:click="addTodoTag(todo.id, tags[index].id)">{{ tags[index].title }}</button>
-                                    </span>
-                                </div>
-                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="addNewTodo">Add</button>
@@ -38,9 +26,6 @@
                     <div class="card-body">
                         <h5 class="card-title">{{todo.content}}</h5>
                         <div class="mb-2">
-                            Tag：<span v-for="(key, index) in todo.tags" :key="index"><small class="mr-1">{{todo.tags[index].title}}</small></span>
-                        </div>
-                         <div class="mb-2">
                             Tag：<span v-for="(key, index) in todo.tags" :key="index"><small class="mr-1">{{todo.tags[index].title}}</small></span>
                         </div>
                         <h6 class="card-subtitle mb-2 text-muted">{{todo.created_at}}</h6>
@@ -59,6 +44,9 @@
                 <div class="card" style="width: 18rem;" v-if="todo.done == 1">
                     <div class="card-body">
                         <h5 class="card-title"><s>{{todo.content}}</s></h5>
+                        <div class="mb-2">
+                            Tag：<span v-for="(key, index) in todo.tags" :key="index"><small class="mr-1">{{todo.tags[index].title}}</small></span>
+                        </div>
                         <h6 class="card-subtitle mb-2 text-muted">{{todo.created_at}}</h6>
                     </div>
                     <div class="btn-group position-absolute dropdown" style="top:10px; right:4px;">
@@ -85,6 +73,18 @@
                         </div>
                         <div class="modal-body">
                             <input v-model="content" class="form-control">
+                            <div v-for="(key, index) in tags" :key="index">
+                                <div class="form-check">
+                                    <span v-if="checkTag(todo.tags, tags[index].title)">
+                                        <span >✔</span>
+                                        <button class="btn btn-secondary m-1" v-on:click="removeTodoTag(todo.id, tags[index].id)">{{ tags[index].title }}</button>
+                                    </span>
+                                    <span v-else>
+                                        <span>▢</span>
+                                        <button class="btn btn-secondary m-1" v-on:click="addTodoTag(todo.id, tags[index].id)">{{ tags[index].title }}</button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="editTodoContent(todo)">Submit</button>
@@ -195,7 +195,6 @@ export default {
             })
             this.$forceUpdate();
         },
-
         addNewTodo: function () {
             axios.defaults.headers['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
             axios.defaults.headers['content-type'] = 'application/json';

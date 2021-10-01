@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TagController extends Controller
 {
@@ -18,7 +20,6 @@ class TagController extends Controller
         $tags = $user->tags;
         return response()->json($tags);
     }
-
 
     /**
      * Store a newly created resource in storage.

@@ -65,11 +65,10 @@ class GoalController extends Controller
      */
     public function destroy(Goal $goal)
     {
-        $goal->delete();
+                $goal->delete();
 
         $goals = Auth::user()->goals;
 
         return response()->json($goals);
-
     }
 }

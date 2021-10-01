@@ -28,11 +28,9 @@ class CreateTodoTagsTable extends Migration
      */
     public function down()
     {
-    Schema::table('todo_tags', function (Blueprint $table) {
+        Schema::table('todo_tags', function (Blueprint $table) {
             $table->dropColumn('todo_id');
             $table->dropColumn('tag_id');
         });
-    
-    
     }
 }

@@ -16,7 +16,7 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Goal $goal)
+    public function index()
     {
         $todos = $goal->todos()->with('tags')->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
         return response()->json($todos);
@@ -28,7 +28,7 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Goal $goal)
+    public function store(Request $request)
     {
         $todo = new Todo();
         $todo->content = request('content');
@@ -38,10 +38,9 @@ class TodoController extends Controller
         $todo->done = false;
         $todo->save();
         $todos = $goal->todos()->with('tags')->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
-
         return response()->json($todos);
-    }
 
+    }
 
     /**
      * Update the specified resource in storage.
@@ -50,7 +49,7 @@ class TodoController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Goal $goal, Todo $todo)
+    public function update(Request $request, Todo $todo)
     {
         $todo->content = request('content');
         $todo->user_id = Auth::id();
@@ -58,9 +57,9 @@ class TodoController extends Controller
         $todo->position = request('position');
         $todo->done = (bool) request('done');
         $todo->save();
+
         $todos = $goal->todos()->with('tags')->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
         return response()->json($todos);
-
     }
 
     /**
@@ -76,7 +75,6 @@ class TodoController extends Controller
         return response()->json($todos);
     }
 
-    
     public function sort(Request $request, Goal $goal, Todo $todo)
     {
         $exchangeTodo = Todo::where('position', request('sortId'))->first();
@@ -91,8 +89,10 @@ class TodoController extends Controller
         }
 
         $todos = $goal->todos()->with('tags')->orderBy('done', 'asc')->orderBy('position', 'asc')->get();
+
         return response()->json($todos);
     }
+    
     public function addTag(Request $request, Goal $goal, Todo $todo, Tag $tag)
         {
             $todo->tags()->attach($tag->id);

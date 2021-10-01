@@ -38,17 +38,19 @@ class User extends Authenticatable
     ];
 
     public function goals()
-        {
-            return $this->hasMany('App\Goal');
-        }
+    {
+        return $this->hasMany('App\Goal');
+    }
+
     public function todos()
-        {
-            return $this->hasMany('App\Todo');
-        }
-    
+    {
+        return $this->hasMany('App\Todo');
+    }
+
     public function tags()
-        {
-            return $this->hasMany('App\Tag');
-        }   
+    {
+        return $this->hasMany('App\Tag');
+    }
+
 
 }
